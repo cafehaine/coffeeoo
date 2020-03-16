@@ -1,3 +1,7 @@
+--- Random utilities and class creation
+-- @module coffeeoo.class
+-- @alias m
+
 local m = {}
 
 local lua_type = type
@@ -32,6 +36,10 @@ local function object_tostring(obj)
 	end
 end
 
+--- Create a new class
+-- @tparam string name the name of the class
+-- @tparam[opt] class parent the parent class to inherit from
+-- @treturn class the new class
 function m.create(name, parent)
 	local c = {__eq=object_eq, __tostring=object_tostring}
 	if type(parent) == "class" then

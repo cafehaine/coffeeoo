@@ -1,8 +1,18 @@
+--- A way to store unique values
+-- @module coffeeoo.set
+-- @alias Set
+
 local class = require("coffeeoo.class")
 
-local set = class.create("Set")
+--- The set class
+-- @type Set
+local Set = class.create("Set")
 
-function set.__new(self, vals)
+--- Instantiate a new set
+-- @function new
+-- @tparam[opt] table vals initial values
+-- @treturn Set a new set
+function Set.__new(self, vals)
 	self.__values = {}
 	self.__count = 0
 
@@ -15,34 +25,52 @@ function set.__new(self, vals)
 	end
 end
 
-function set:contains(val)
+--- Check if a value is contained in this set
+-- @param val the value
+-- @treturn bool is the value present
+function Set:contains(val)
 	return self.__values[val] == true
 end
 
-function set:add(val)
+--- Add a value to this set
+-- @param val the value
+function Set:add(val)
 	if not self.__values[val] then
 		self.__values[val] = true
 		self.__count = self.__count + 1
 	end
 end
 
-function set:remove(val)
+--- Remove a value from this set
+-- @param val the value
+function Set:remove(val)
 	if self.__values[val] then
 		self.__values[val] = nil
 		self.__count = self.__count - 1
 	end
 end
 
-function set:empty()
+--- Return if the set is empty
+-- @treturn bool is the set empty
+function Set:empty()
 	return self.__count == 0
 end
 
--- __len doesn't work in lua 5.1
-function set:len()
+--- Return the number of elements in this set
+-- @treturn int the number of elements
+function Set:__len()
 	return self.__count
+
+--- Return the number of elements in this set
+-- This is an alias for __len, as lua 5.1 doesn't support this metamethod.
+-- @treturn int the number of elements
+function Set:len()
+	return self:__len()
 end
 
-function set:values()
+--- Generate a table containing all the values of this set
+-- @treturn table the values in this set
+function Set:values()
 	local output = {}
 	local index = 1
 	for val, b in pairs(self.__values) do
@@ -52,7 +80,9 @@ function set:values()
 	return output
 end
 
-function set:__tostring()
+--- Generate a string representation of this set
+-- @treturn string
+function Set:__tostring()
 	local strings = {}
 	for i, val in ipairs(self:values()) do
 		if type(val) == "string" then
@@ -61,7 +91,7 @@ function set:__tostring()
 			strings[i] = tostring(val)
 		end
 	end
-	return ("set: {%s}"):format(table.concat(strings, ', '))
+	return ("Set: {%s}"):format(table.concat(strings, ', '))
 end
 
-return set
+return Set
