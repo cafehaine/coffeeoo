@@ -1,3 +1,7 @@
+# Unmaintained project!
+
+I might take another stab at this, but at the moment I no longer plan on developing this.
+
 # CoffeeOO
 ## What is CoffeeOO
 CoffeeOO is my own lua object oriented library. It implements inheritance,
